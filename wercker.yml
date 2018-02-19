@@ -36,11 +36,11 @@ build:
           pwd
           echo ls
           ls
-          
+
 deploy:
     box: google/golang
     steps:
-    # use the scratch step to build a container from scratch based on the files present
+    # build and push a normal image
     - internal/docker-push:
         #entrypoint: bin/hello
         cmd: 0.0.0.0 8080 ../hello/message.cfg
