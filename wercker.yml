@@ -37,6 +37,20 @@ build:
           echo ls
           ls
 
+hello-master:
+  steps:
+    - script:
+        name: The hello-master step
+        code: |
+          echo Greetings. This is the hello-master step
+
+hello-world:
+  steps:
+    - script:
+        name: The hello-world step
+        code: |
+          echo Greetings. This is the hello-world step          
+
 deploy:
     box: google/golang
     steps:
