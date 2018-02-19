@@ -1,0 +1,5 @@
+FROM scratch
+# If we used SSL we would need to copy SSL certificates here
+# ADD ca-certificates.crt /etc/ssl/certs/
+ADD myapp /
+CMD ["/myapp"]
