@@ -20,7 +20,7 @@ func cityHandler(res http.ResponseWriter, req *http.Request) {
 
 func defaultHandler(res http.ResponseWriter, req *http.Request) {
 	res.Header().Set("Content-Type", "text/plain; charset=utf-8")
-	res.Write([]byte("Hello Cruel World!"))
+	res.Write([]byte("Hello World!"))
 }
 
 func main() {
