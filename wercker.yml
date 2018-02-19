@@ -38,6 +38,7 @@ build:
           ls
 
 hello-master:
+  box: alpine
   steps:
     - script:
         name: The hello-master step
@@ -45,6 +46,7 @@ hello-master:
           echo Greetings. This is the hello-master step
 
 hello-world:
+  box: alpine
   steps:
     - script:
         name: The hello-world step
