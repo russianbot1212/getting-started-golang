@@ -49,7 +49,7 @@ hello-world:
     - script:
         name: The hello-world step
         code: |
-          echo Greetings. This is the hello-world step          
+          echo Greetings.  This is the hello-world step          
 
 deploy:
     box: google/golang
