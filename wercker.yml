@@ -26,22 +26,30 @@ build:
         name: go build
         code: CGO_ENABLED=0 go build -a -ldflags '-s' -installsuffix cgo -o app .
 
-    # Create cities-controller.json for initialization
+    # 
     - script:
-        name: Listing $WERCKER_OUTPUT_DIR
-        code: ls -l $WERCKER_OUTPUT_DIR
-
+        name: Listing 
+        code: | 
+          echo Listing $WERCKER_OUTPUT_DIR
+          ls -l $WERCKER_OUTPUT_DIR
+          echo pwd
+          pwd
+          echo ls
+          ls
+          
 deploy:
     box: google/golang
     steps:
     # use the scratch step to build a container from scratch based on the files present
-    - internal/docker-scratch-push:
-        username: $DOCKER_HUB_USERNAME
-        password: $DOCKER_HUB_PASSWORD
-        cmd: ./app
+    - internal/docker-push:
+        #entrypoint: bin/hello
+        cmd: 0.0.0.0 8080 ../hello/message.cfg
+        working-dir: $WERCKER_ROOT
         tag: $WERCKER_GIT_COMMIT
-        ports: "5000"
-        #repository: DOCKER_HUB.io/wercker/wercker-kubernetes-DOCKER_HUB
-        registry: https://hub.docker.com
+        ports: "8080"
+        username: $DOCKERHUB_USERNAME
+        password: $DOCKERHUB_PASSWORD
+        repository: $DOCKERHUB_REPOSITORY
+registry: https://registry.hub.docker.com
  # also try a non-scratch push
 
