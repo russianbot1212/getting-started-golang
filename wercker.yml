@@ -46,7 +46,7 @@ push-normal-image-to-wcrio:
     box: alpine # does this matter?
     steps:
     - script:
-        name: Check what we've got # looks like pipeline/output ($WERCKER_OUTPUT_DIR) is not copied to next pipeline, but pipeline/source ($WERCKER_ROOT) is not
+        name: Check what we've got # looks like pipeline/output ($WERCKER_OUTPUT_DIR) is not copied to next pipeline, but /pipeline/source ($WERCKER_ROOT) is not
         code: |
           echo WERCKER_ROOT=$WERCKER_ROOT
           ls -l $WERCKER_ROOT        
@@ -55,7 +55,7 @@ push-normal-image-to-wcrio:
     - internal/docker-push:
       # Note: The repository parameter can be omitted when the build runs on wercker.com
       tag: wcr-normal
-      cmd: $WERCKER_ROOT/myapp
+      cmd: /pipeline/source/myapp
       ports: "5000"
       repository: wcr.io/nigeldeakin/getting-started-golang   
 
