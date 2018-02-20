@@ -48,11 +48,10 @@ push-normal-image-to-wcrio:
     - script:
         name: Check what we've got
         code: |
-          pwd
-          ls -l
-          echo WERCKER_GIT_COMMIT=$WERCKER_GIT_COMMIT
-          echo WERCKER_ROOT=$WERCKER_ROOT
-          echo WERCKER_OUTPUT_DIR=$WERCKER_OUTPUT_DIR
+          echo $WERCKER_ROOT
+          ls -l $WERCKER_ROOT        
+          echo $WERCKER_OUTPUT_DIR
+          ls -l $WERCKER_OUTPUT_DIR
     - internal/docker-push:
       # Note: The repository parameter can be omitted when the build runs on wercker.com
       tag: wcr-normal
