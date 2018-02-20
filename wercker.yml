@@ -1,3 +1,6 @@
+#
+# This wercker.yml uses a minimal build
+#
 dev:
   box:
     id: golang
@@ -24,48 +27,44 @@ build:
     # Statically build the project
     - script:
         name: go build
-        code: CGO_ENABLED=0 go build -a -ldflags '-s' -installsuffix cgo -o app .
-
-    # 
-    - script:
-        name: Listing 
-        code: | 
-          echo Listing $WERCKER_OUTPUT_DIR
-          ls -l $WERCKER_OUTPUT_DIR
-          echo pwd
+        code: |
+          CGO_ENABLED=0 go build -a -ldflags '-s' -installsuffix cgo -o myapp .
+          echo Verifying build
           pwd
-          echo ls
-          ls
+          ls -l
 
-hello-master:
-  box: alpine
-  steps:
+    # Copy binary to location that gets passed along to deploy (WERCKER_OUTPUT_DIR is /pipeline.output)
     - script:
-        name: The hello-master step
+        name: copy binary
         code: |
-          echo Greetings. This is the hello-master step
+          cp myapp "$WERCKER_OUTPUT_DIR"
+          echo $WERCKER_OUTPUT_DIR
+          ls -l $WERCKER_OUTPUT_DIR
 
-hello-world:
-  box: alpine
-  steps:
-    - script:
-        name: The hello-world step
-        code: |
-          echo Greetings.  This is the hello-world step          
-
-deploy:
-    box: google/golang
+# This pipeline will be chained to start at the end of a build pipeline in the
+# Wercker Web Workflows editor.
+push-dockerhub:
+    box: alpine # does this matter?
     steps:
-    # build and push a normal image
+    - script:
+        # Check what we've got
+        name: Check what we've got
+        code: |
+          pwd
+          ls -l
+          echo WERCKER_GIT_COMMIT=$WERCKER_GIT_COMMIT
+          echo WERCKER_ROOT=$WERCKER_ROOT
+          echo WERCKER_OUTPUT_DIR=$WERCKER_OUTPUT_DIR
+    # Create a docker image, and push it to the Docker Hub.
     - internal/docker-push:
         #entrypoint: bin/hello
-        cmd: 0.0.0.0 8080 ../hello/message.cfg
+        cmd: $WERCKER_OUTPUT_DIR/myapp
         working-dir: $WERCKER_ROOT
         tag: $WERCKER_GIT_COMMIT
         ports: "8080"
         username: $DOCKERHUB_USERNAME
         password: $DOCKERHUB_PASSWORD
         repository: $DOCKERHUB_REPOSITORY
-registry: https://registry.hub.docker.com
- # also try a non-scratch push
+        registry: https://registry.hub.docker.com
+        
 
