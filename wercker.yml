@@ -41,13 +41,11 @@ build:
           echo $WERCKER_OUTPUT_DIR
           ls -l $WERCKER_OUTPUT_DIR
 
-# This pipeline will be chained to start at the end of a build pipeline in the
-# Wercker Web Workflows editor.
-push-dockerhub:
+# Push a "normal" (large) image to wcr.io
+push-normal-image-to-wcrio:
     box: alpine # does this matter?
     steps:
     - script:
-        # Check what we've got
         name: Check what we've got
         code: |
           pwd
@@ -56,9 +54,8 @@ push-dockerhub:
           echo WERCKER_ROOT=$WERCKER_ROOT
           echo WERCKER_OUTPUT_DIR=$WERCKER_OUTPUT_DIR
     - internal/docker-push:
-      # Note: The repository parameter can be omitted
-      # if your build runs on wercker.com.
-      tag: $WERCKER_GIT_BRANCH
+      # Note: The repository parameter can be omitted when the build runs on wercker.com
+      tag: wcr-normal
       cmd: $WERCKER_OUTPUT_DIR/myapp
       ports: "5000"
       repository: wcr.io/nigeldeakin/getting-started-golang   
