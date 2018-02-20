@@ -55,17 +55,13 @@ push-dockerhub:
           echo WERCKER_GIT_COMMIT=$WERCKER_GIT_COMMIT
           echo WERCKER_ROOT=$WERCKER_ROOT
           echo WERCKER_OUTPUT_DIR=$WERCKER_OUTPUT_DIR
-    # Create a docker image, and push it to the Docker Hub.
     - internal/docker-push:
-        #entrypoint: bin/hello
-        cmd: $WERCKER_OUTPUT_DIR/myapp
-        working-dir: $WERCKER_ROOT
-        tag: $WERCKER_GIT_COMMIT
-        ports: "8080"
-        username: $DOCKERHUB_USERNAME
-        password: $DOCKERHUB_PASSWORD
-        repository: $DOCKERHUB_REPOSITORY
-        registry: https://registry.hub.docker.com
+      # Note: The repository parameter can be omitted
+      # if your build runs on wercker.com.
+      tag: wcr.io/nigeldeakin/getting-started-golang/$WERCKER_GIT_BRANCH
+      cmd: $WERCKER_OUTPUT_DIR/myapp
+      ports: "5000"
+      repository: wcr.io/nigeldeakin/getting-started-golang   
 
 # This is for local testing
 build-and-push:
@@ -94,13 +90,14 @@ build-and-push:
     - script:
         name: set environment variables 
         code: |
+          DOCKERHUB_USERNAME=nigeldeakin
+          DOCKERHUB_PASSWORD=0088Ship
           DOCKERHUB_REPOSITORY=nigeldeakin/getting-started-golang-w-full
     - script:
         # Check what we've got
         name: Check what we've got
         code: |
-          pwd
-          ls -l
+          ls -l $WERCKER_OUTPUT_DIR
           echo DOCKERHUB_PASSWORD=$DOCKERHUB_PASSWORD
           echo DOCKERHUB_USERNAME=$DOCKERHUB_USERNAME
           echo DOCKERHUB_REPOSITORY=$DOCKERHUB_REPOSITORY
@@ -108,12 +105,12 @@ build-and-push:
           echo WERCKER_GIT_COMMIT=$WERCKER_GIT_COMMIT
           echo WERCKER_ROOT=$WERCKER_ROOT
           echo WERCKER_OUTPUT_DIR=$WERCKER_OUTPUT_DIR
-    # Create a docker image, and push it to the Docker Hub.
     - internal/docker-push:
-        username: $DOCKERHUB_USERNAME
-        password: $DOCKERHUB_PASSWORD
-        tag: $WERCKER_GIT_BRANCH
-        cmd: $WERCKER_OUTPUT_DIR/myapp
-        ports: "5000"
-        repository: nigeldeakin/getting-started-golang-w-full
-        registry: https://registry.hub.docker.com
+      # Note: The repository parameter can be omitted
+      # if your build runs on wercker.com.
+      tag: wcr.io/nigeldeakin/getting-started-golang/$WERCKER_GIT_BRANCH
+      cmd: $WERCKER_OUTPUT_DIR/myapp
+      ports: "5000"
+      repository: wcr.io/nigeldeakin/getting-started-golang        
+
+
