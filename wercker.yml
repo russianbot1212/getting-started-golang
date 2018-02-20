@@ -58,7 +58,7 @@ push-dockerhub:
     - internal/docker-push:
       # Note: The repository parameter can be omitted
       # if your build runs on wercker.com.
-      tag: wcr.io/nigeldeakin/getting-started-golang/$WERCKER_GIT_BRANCH
+      tag: $WERCKER_GIT_BRANCH
       cmd: $WERCKER_OUTPUT_DIR/myapp
       ports: "5000"
       repository: wcr.io/nigeldeakin/getting-started-golang   
