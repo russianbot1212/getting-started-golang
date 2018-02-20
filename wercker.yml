@@ -55,7 +55,7 @@ push-normal-image-to-wcrio:
     - internal/docker-push:
       # Note: The repository parameter can be omitted when the build runs on wercker.com
       tag: wcr-normal
-      cmd: bash # $WERCKER_OUTPUT_DIR/myapp
+      cmd: $WERCKER_ROOT/myapp
       ports: "5000"
       repository: wcr.io/nigeldeakin/getting-started-golang   
 
