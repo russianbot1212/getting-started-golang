@@ -61,7 +61,8 @@ build:
       repository: wcr.io/nigeldeakin/getting-started-golang  # can be omitted when the build runs on wercker.com
     - internal/docker-scratch-push: # Creates 1.43MB image
       tag: wcr-minimal-samepipe
-      cmd: /pipeline/source/myapp
+      #cmd: /pipeline/source/myapp # fails 
+      cmd: sh  
       ports: "5000"
       repository: wcr.io/nigeldeakin/getting-started-golang  # can be omitted when the build runs on wercker.com      
 # Push a "maximal" (large) image to wcr.io
