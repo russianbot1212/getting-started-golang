@@ -32,22 +32,28 @@ build:
           echo Verifying build
           pwd
           ls -l
-    # Copy binary to location that gets passed along to deploy (WERCKER_OUTPUT_DIR is /pipeline.output)
+    # Copy binary to location that gets passed along to next pipeline (WERCKER_OUTPUT_DIR is /pipeline/output)
     - script:
         name: copy binary
         code: |
+          touch $WERCKER_ROOT/file-added-to-wercker-root
+          touch $WERCKER_OUTPUT_DIR/file-added-to-wercker-output_dir
           cp myapp "$WERCKER_OUTPUT_DIR"
           echo $WERCKER_OUTPUT_DIR
           ls -l $WERCKER_OUTPUT_DIR
     - internal/docker-push:
-      # Note: The repository parameter can be omitted when the build runs on wercker.com
-      tag: wcr-normal-samepipe
+      tag: wcr-maximal-samepipe
       cmd: /pipeline/source/myapp
       ports: "5000"
-      repository: wcr.io/nigeldeakin/getting-started-golang   
-# Push a "normal" (large) image to wcr.io
-push-normal-image-to-wcrio:
-    box: alpine # does this matter?
+      repository: wcr.io/nigeldeakin/getting-started-golang  # can be omitted when the build runs on wercker.com
+    - internal/docker-scratch-push:
+      tag: wcr-minimal-samepipe
+      cmd: /pipeline/source/myapp
+      ports: "5000"
+      repository: wcr.io/nigeldeakin/getting-started-golang  # can be omitted when the build runs on wercker.com      
+# Push a "maximal" (large) image to wcr.io
+push-maximal-image-to-wcrio:
+    box: alpine # this seems to also be the used as the base image when we do docker-push, so is actually pretty minimal
     steps:
     - script:
         name: Check what we've got # looks like pipeline/output ($WERCKER_OUTPUT_DIR) is not copied to next pipeline, but /pipeline/source ($WERCKER_ROOT) is not
@@ -57,29 +63,25 @@ push-normal-image-to-wcrio:
           echo $WERCKER_OUTPUT_DIR=WERCKER_OUTPUT_DIR
           ls -l $WERCKER_OUTPUT_DIR
     - internal/docker-push:
-      # Note: The repository parameter can be omitted when the build runs on wercker.com
-      tag: wcr-normal-newpipe
+      tag: wcr-newpipe-maximal
       cmd: /pipeline/source/myapp
       ports: "5000"
-      repository: wcr.io/nigeldeakin/getting-started-golang   
-
-# Push a "minimal" (large) image to wcr.io
-push-minimal-image-to-wcrio:
-    box: alpine # does this matter?
-    steps:
-    - script:
-        name: Check what we've got # looks like pipeline/output ($WERCKER_OUTPUT_DIR) is not copied to next pipeline, but /pipeline/source ($WERCKER_ROOT) is not
-        code: |
-          echo WERCKER_ROOT=$WERCKER_ROOT
-          ls -l $WERCKER_ROOT        
-          echo $WERCKER_OUTPUT_DIR=WERCKER_OUTPUT_DIR
-          ls -l $WERCKER_OUTPUT_DIR
-    - internal/docker-push:
-      # Note: The repository parameter can be omitted when the build runs on wercker.com
-      tag: wcr-normal
-      cmd: /pipeline/source/myapp
-      ports: "5000"
-      repository: wcr.io/nigeldeakin/getting-started-golang   
+      repository: wcr.io/nigeldeakin/getting-started-golang  # can be omitted when the build runs on wercker.com
     
-
+# Push a "minimal" (scratch) image to wcr.io
+push-minimal-image-to-wcrio:
+    box: alpine # I think this is used just to run this pipeline, but the image created using docker-scratch-push uses a "scratch" base image
+    steps:
+    - script:
+        name: Check what we've got # looks like pipeline/output ($WERCKER_OUTPUT_DIR) is not copied to next pipeline, but /pipeline/source ($WERCKER_ROOT) is not
+        code: |
+          echo WERCKER_ROOT=$WERCKER_ROOT
+          ls -l $WERCKER_ROOT        
+          echo $WERCKER_OUTPUT_DIR=WERCKER_OUTPUT_DIR
+          ls -l $WERCKER_OUTPUT_DIR
+    - internal/docker-scratch-push:
+      tag: wcr-newpipe-maximal
+      cmd: /pipeline/source/myapp
+      ports: "5000"
+      repository: wcr.io/nigeldeakin/getting-started-golang  # can be omitted when the build runs on wercker.com
 
