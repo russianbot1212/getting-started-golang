@@ -42,21 +42,24 @@ build:
     - script:
         name: Add sentinels (so we can discover which firectories are copied)
         code: |
+          touch /pipeline/file-added-to-slash-pipeline
           touch $WERCKER_ROOT/file-added-to-wercker-root
           touch $WERCKER_OUTPUT_DIR/file-added-to-wercker-output_dir        
     - script:
         name: Check what we've got # looks like pipeline/output ($WERCKER_OUTPUT_DIR) is not copied to next pipeline, but /pipeline/source ($WERCKER_ROOT) is not
         code: |
-          echo WERCKER_ROOT=$WERCKER_ROOT
+          echo Contents of /pipeline
+          ls -l pipeline   
+          echo Contents of WERCKER_ROOT=$WERCKER_ROOT
           ls -l $WERCKER_ROOT        
-          echo $WERCKER_OUTPUT_DIR=WERCKER_OUTPUT_DIR
+          echo Contents of WERCKER_OUTPUT_DIR=$WERCKER_OUTPUT_DIR
           ls -l $WERCKER_OUTPUT_DIR
-    - internal/docker-push:
+    - internal/docker-push: # Creates 220MB image
       tag: wcr-maximal-samepipe
       cmd: /pipeline/source/myapp
       ports: "5000"
       repository: wcr.io/nigeldeakin/getting-started-golang  # can be omitted when the build runs on wercker.com
-    - internal/docker-scratch-push:
+    - internal/docker-scratch-push: # Creates 1.43MB image
       tag: wcr-minimal-samepipe
       cmd: /pipeline/source/myapp
       ports: "5000"
@@ -68,9 +71,11 @@ push-maximal-image-to-wcrio:
     - script:
         name: Check what we've got # looks like pipeline/output ($WERCKER_OUTPUT_DIR) is not copied to next pipeline, but /pipeline/source ($WERCKER_ROOT) is not
         code: |
-          echo WERCKER_ROOT=$WERCKER_ROOT
+          echo Contents of /pipeline
+          ls -l pipeline   
+          echo Contents of WERCKER_ROOT=$WERCKER_ROOT
           ls -l $WERCKER_ROOT        
-          echo $WERCKER_OUTPUT_DIR=WERCKER_OUTPUT_DIR
+          echo Contents of WERCKER_OUTPUT_DIR=$WERCKER_OUTPUT_DIR
           ls -l $WERCKER_OUTPUT_DIR
     - internal/docker-push:
       tag: wcr-newpipe-maximal
@@ -85,9 +90,11 @@ push-minimal-image-to-wcrio:
     - script:
         name: Check what we've got # looks like pipeline/output ($WERCKER_OUTPUT_DIR) is not copied to next pipeline, but /pipeline/source ($WERCKER_ROOT) is not
         code: |
-          echo WERCKER_ROOT=$WERCKER_ROOT
+          echo Contents of /pipeline
+          ls -l pipeline   
+          echo Contents of WERCKER_ROOT=$WERCKER_ROOT
           ls -l $WERCKER_ROOT        
-          echo $WERCKER_OUTPUT_DIR=WERCKER_OUTPUT_DIR
+          echo Contents of WERCKER_OUTPUT_DIR=$WERCKER_OUTPUT_DIR
           ls -l $WERCKER_OUTPUT_DIR
     - internal/docker-scratch-push:
       tag: wcr-newpipe-maximal
