@@ -49,7 +49,7 @@ build:
         name: Check what we've got # looks like pipeline/output ($WERCKER_OUTPUT_DIR) is not copied to next pipeline, but /pipeline/source ($WERCKER_ROOT) is not
         code: |
           echo Contents of /pipeline
-          ls -l pipeline   
+          ls -l /pipeline   
           echo Contents of WERCKER_ROOT=$WERCKER_ROOT
           ls -l $WERCKER_ROOT        
           echo Contents of WERCKER_OUTPUT_DIR=$WERCKER_OUTPUT_DIR
@@ -72,7 +72,7 @@ push-maximal-image-to-wcrio:
         name: Check what we've got # looks like pipeline/output ($WERCKER_OUTPUT_DIR) is not copied to next pipeline, but /pipeline/source ($WERCKER_ROOT) is not
         code: |
           echo Contents of /pipeline
-          ls -l pipeline   
+          ls -l /pipeline   
           echo Contents of WERCKER_ROOT=$WERCKER_ROOT
           ls -l $WERCKER_ROOT        
           echo Contents of WERCKER_OUTPUT_DIR=$WERCKER_OUTPUT_DIR
@@ -91,7 +91,7 @@ push-minimal-image-to-wcrio:
         name: Check what we've got # looks like pipeline/output ($WERCKER_OUTPUT_DIR) is not copied to next pipeline, but /pipeline/source ($WERCKER_ROOT) is not
         code: |
           echo Contents of /pipeline
-          ls -l pipeline   
+          ls -l /pipeline   
           echo Contents of WERCKER_ROOT=$WERCKER_ROOT
           ls -l $WERCKER_ROOT        
           echo Contents of WERCKER_OUTPUT_DIR=$WERCKER_OUTPUT_DIR
