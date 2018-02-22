@@ -19,9 +19,11 @@ build:
   box: google/golang
   steps:
     - script: 
-        name: "Wait for MariaDB connection" 
+        name: "Wait for Fn connection" 
         code: | 
+          echo "About to curl up"
           curl fnserver:8080/metrics
+          echo "That was the curl"
           while ! nc -q 1 fnserver 8080 </dev/null; do sleep 3; done
 
 
