@@ -117,8 +117,7 @@ test-wcr-maximal-samepipe:
   box: odise/busybox-curl
   steps:
     - script: 
-        name: "Wait for wcr-maximal-samepipe connection" 
+        name: "Test image wcr-maximal-samepipe" 
         code: | 
-          echo "About to curl up"
-          curl wcr-maximal-samepipe:5000
-          echo "That was the curl"
+          echo $WERCKER_GIT_COMMIT
+          curl wcr-maximal-samepipe:5000 
