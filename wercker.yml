@@ -114,7 +114,7 @@ test-wcr-maximal-samepipe:
   services:
     - name: wcr-maximal-samepipe
       id: wcr.io/nigeldeakin/getting-started-golang:wcr-maximal-samepipe
-  box: alpine
+  box: odise/busybox-curl
   steps:
     - script: 
         name: "Wait for wcr-maximal-samepipe connection" 
