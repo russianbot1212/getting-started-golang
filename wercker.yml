@@ -14,7 +14,7 @@ dev:
 
 build:
   services:
-    - name:fnserver
+    - name: fnserver
       id: fnproject/fnserver
   box: google/golang
   steps:
