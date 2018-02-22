@@ -14,10 +14,17 @@ dev:
 
 build:
   services:
-    - name: prommy1
-      id: prom/prometheus
+    - name:fnserver
+      id: fnproject/fnserver
   box: google/golang
   steps:
+    - script: 
+        name: "Wait for MariaDB connection" 
+        code: | 
+          curl fnserver:8080/metrics
+          while ! nc -q 1 fnserver 8080 </dev/null; do sleep 3; done
+
+
     # Test the project
     - script:
         name: go test
