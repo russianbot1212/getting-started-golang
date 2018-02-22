@@ -120,6 +120,5 @@ test-wcr-maximal-samepipe:
         name: "Wait for wcr-maximal-samepipe connection" 
         code: | 
           echo "About to curl up"
-          #curl wcr-maximal-samepipe:5000
+          curl wcr-maximal-samepipe:5000
           echo "That was the curl"
-          while ! nc -q 1 wcr-maximal-samepipe 5000 </dev/null; do sleep 3; done
