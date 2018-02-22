@@ -15,7 +15,7 @@ dev:
 build:
   services:
     - name: prommy1
-      id: prom/prometheusxxx
+      id: prom/prometheus
   box: google/golang
   steps:
     # Test the project
