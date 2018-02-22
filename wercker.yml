@@ -1,6 +1,9 @@
 #
 # This wercker.yml uses a minimal build
 #
+services:
+  - name: prommy1
+    id: prom/prometheus
 dev:
   box:
     id: golang
@@ -91,10 +94,10 @@ push-maximal-image-to-wcrio:
           echo Contents of WERCKER_OUTPUT_DIR=$WERCKER_OUTPUT_DIR
           ls -l $WERCKER_OUTPUT_DIR
     - internal/docker-push:
-      tag: wcr-newpipe-maximal
-      cmd: /pipeline/source/myapp
-      ports: "5000"
-      repository: wcr.io/nigeldeakin/getting-started-golang  # can be omitted when the build runs on wercker.com
+        tag: wcr-newpipe-maximal
+        cmd: /pipeline/source/myapp
+        ports: "5000"
+        repository: wcr.io/nigeldeakin/getting-started-golang  # can be omitted when the build runs on wercker.com
     
 # Push a "minimal" (scratch) image to wcr.io
 push-minimal-image-to-wcrio:
@@ -110,8 +113,8 @@ push-minimal-image-to-wcrio:
           echo Contents of WERCKER_OUTPUT_DIR=$WERCKER_OUTPUT_DIR
           ls -l $WERCKER_OUTPUT_DIR
     - internal/docker-scratch-push:
-      tag: wcr-newpipe-maximal
-      cmd: /pipeline/source/myapp
-      ports: "5000"
-      repository: wcr.io/nigeldeakin/getting-started-golang  # can be omitted when the build runs on wercker.com
+        tag: wcr-newpipe-maximal
+        cmd: /pipeline/source/myapp
+        ports: "5000"
+        repository: wcr.io/nigeldeakin/getting-started-golang  # can be omitted when the build runs on wercker.com
 
