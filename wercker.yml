@@ -13,25 +13,12 @@ dev:
         reload: true
 
 build:
-  services:
-    - name: fnserver
-      id: fnproject/fnserver
   box: google/golang
   steps:
-    - script: 
-        name: "Wait for Fn connection" 
-        code: | 
-          echo "About to curl up"
-          curl fnserver:8080/metrics
-          echo "That was the curl"
-          while ! nc -q 1 fnserver 8080 </dev/null; do sleep 3; done
-
-
     # Test the project
     - script:
         name: go test
         code: go test ./...
-
     # Statically build the project
     - script:
         name: go build
@@ -133,6 +120,6 @@ test-wcr-maximal-samepipe:
         name: "Wait for wcr-maximal-samepipe connection" 
         code: | 
           echo "About to curl up"
-          curl wcr-maximal-samepipe:5000
+          #curl wcr-maximal-samepipe:5000
           echo "That was the curl"
           while ! nc -q 1 wcr-maximal-samepipe 5000 </dev/null; do sleep 3; done
