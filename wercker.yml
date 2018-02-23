@@ -40,6 +40,7 @@ build:
           touch /pipeline/file-added-to-slash-pipeline
           touch $WERCKER_ROOT/file-added-to-wercker-root
           touch $WERCKER_OUTPUT_DIR/file-added-to-wercker-output_dir        
+          touch $WERCKER_CACHE_DIR/file-added-to-wercker-cache_dir        
     - script:
         name: Check what we've got # looks like pipeline/output ($WERCKER_OUTPUT_DIR) is not copied to next pipeline, but /pipeline/source ($WERCKER_ROOT) is not
         code: |
@@ -49,19 +50,8 @@ build:
           ls -l $WERCKER_ROOT        
           echo Contents of WERCKER_OUTPUT_DIR=$WERCKER_OUTPUT_DIR
           ls -l $WERCKER_OUTPUT_DIR
-    - script:
-        name: Add more sentinels  
-        code: |
-          touch /pipeline/file-added-to-slash-pipeline-number-two
-    - script:
-        name: Check what we've got # looks like pipeline/output ($WERCKER_OUTPUT_DIR) is not copied to next pipeline, but /pipeline/source ($WERCKER_ROOT) is not
-        code: |
-          echo Contents of /pipeline
-          ls -l /pipeline   
-          echo Contents of WERCKER_ROOT=$WERCKER_ROOT
-          ls -l $WERCKER_ROOT        
-          echo Contents of WERCKER_OUTPUT_DIR=$WERCKER_OUTPUT_DIR
-          ls -l $WERCKER_OUTPUT_DIR
+          echo Contents of WERCKER_CACHE_DIR=$WERCKER_CACHE_DIR
+          ls -l $WERCKER_CACHE_DIR       
     - internal/docker-push: # Creates 220MB image
       tag: wcr-maximal-samepipe
       cmd: /pipeline/source/myapp
@@ -85,6 +75,8 @@ push-maximal-image-to-wcrio:
           ls -l $WERCKER_ROOT        
           echo Contents of WERCKER_OUTPUT_DIR=$WERCKER_OUTPUT_DIR
           ls -l $WERCKER_OUTPUT_DIR
+          echo Contents of WERCKER_CACHE_DIR=$WERCKER_CACHE_DIR
+          ls -l $WERCKER_CACHE_DIR     
     - internal/docker-push:
         tag: wcr-newpipe-maximal
         cmd: /pipeline/source/myapp
@@ -104,6 +96,8 @@ push-minimal-image-to-wcrio:
           ls -l $WERCKER_ROOT        
           echo Contents of WERCKER_OUTPUT_DIR=$WERCKER_OUTPUT_DIR
           ls -l $WERCKER_OUTPUT_DIR
+          echo Contents of WERCKER_CACHE_DIR=$WERCKER_CACHE_DIR
+          ls -l $WERCKER_CACHE_DIR    
     - internal/docker-scratch-push:
         tag: wcr-newpipe-maximal
         cmd: /pipeline/source/myapp
