@@ -115,3 +115,22 @@ test-wcr-maximal-samepipe:
         code: | 
           echo $WERCKER_GIT_COMMIT
           curl wcr-maximal-samepipe:5000 
+# This pipeline uses the image created by the previous pipeline
+test-using-previous-image:
+  box: $WERCKER_LAST_BUILD_BOX
+  steps:
+    - script:
+        name: Dump $WERCKER_LAST_BUILD_BOX
+        code: |
+          echo WERCKER_LAST_BUILD_BOX=$WERCKER_LAST_BUILD_BOX
+    - script:
+        name: Check what we've got # looks like pipeline/output ($WERCKER_OUTPUT_DIR) is not copied to next pipeline, but /pipeline/source ($WERCKER_ROOT) is not
+        code: |
+          echo Contents of /pipeline
+          ls -l /pipeline   
+          echo Contents of WERCKER_ROOT=$WERCKER_ROOT
+          ls -l $WERCKER_ROOT        
+          echo Contents of WERCKER_OUTPUT_DIR=$WERCKER_OUTPUT_DIR
+          ls -l $WERCKER_OUTPUT_DIR
+          echo Contents of WERCKER_CACHE_DIR=$WERCKER_CACHE_DIR
+          ls -l $WERCKER_CACHE_DIR       
