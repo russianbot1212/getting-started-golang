@@ -117,7 +117,7 @@ test-wcr-maximal-samepipe:
           curl wcr-maximal-samepipe:5000 
 # This pipeline uses the image created by the previous pipeline
 test-using-previous-image:
-  box: $WERCKER_LAST_BUILD_BOX
+  box: alpine #$WERCKER_LAST_BUILD_BOX
   steps:
     - script:
         name: Dump $WERCKER_LAST_BUILD_BOX
