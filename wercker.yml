@@ -52,7 +52,7 @@ build:
           ls -l $WERCKER_OUTPUT_DIR
           echo Contents of WERCKER_CACHE_DIR=$WERCKER_CACHE_DIR
           ls -l $WERCKER_CACHE_DIR 
-    - internal/store-container           
+          echo WERCKER_GIT_COMMIT=$WERCKER_GIT_COMMIT      
     - internal/docker-push: # Creates 220MB image
       tag: wcr-maximal-samepipe
       cmd: /pipeline/source/myapp
@@ -77,7 +77,8 @@ push-maximal-image-to-wcrio:
           echo Contents of WERCKER_OUTPUT_DIR=$WERCKER_OUTPUT_DIR
           ls -l $WERCKER_OUTPUT_DIR
           echo Contents of WERCKER_CACHE_DIR=$WERCKER_CACHE_DIR
-          ls -l $WERCKER_CACHE_DIR     
+          ls -l $WERCKER_CACHE_DIR 
+          echo WERCKER_GIT_COMMIT=$WERCKER_GIT_COMMIT          
     - internal/docker-push:
         tag: wcr-newpipe-maximal
         cmd: /pipeline/source/myapp
@@ -98,7 +99,8 @@ push-minimal-image-to-wcrio:
           echo Contents of WERCKER_OUTPUT_DIR=$WERCKER_OUTPUT_DIR
           ls -l $WERCKER_OUTPUT_DIR
           echo Contents of WERCKER_CACHE_DIR=$WERCKER_CACHE_DIR
-          ls -l $WERCKER_CACHE_DIR    
+          ls -l $WERCKER_CACHE_DIR 
+          echo WERCKER_GIT_COMMIT=$WERCKER_GIT_COMMIT     
     - internal/docker-scratch-push:
         tag: wcr-newpipe-maximal
         cmd: /pipeline/source/myapp
@@ -134,4 +136,5 @@ test-using-previous-image:
           echo Contents of WERCKER_OUTPUT_DIR=$WERCKER_OUTPUT_DIR
           ls -l $WERCKER_OUTPUT_DIR
           echo Contents of WERCKER_CACHE_DIR=$WERCKER_CACHE_DIR
-          ls -l $WERCKER_CACHE_DIR       
+          ls -l $WERCKER_CACHE_DIR 
+          echo WERCKER_GIT_COMMIT=$WERCKER_GIT_COMMIT     
