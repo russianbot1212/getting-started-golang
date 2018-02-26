@@ -51,7 +51,8 @@ build:
           echo Contents of WERCKER_OUTPUT_DIR=$WERCKER_OUTPUT_DIR
           ls -l $WERCKER_OUTPUT_DIR
           echo Contents of WERCKER_CACHE_DIR=$WERCKER_CACHE_DIR
-          ls -l $WERCKER_CACHE_DIR       
+          ls -l $WERCKER_CACHE_DIR 
+    - internal/store-container           
     - internal/docker-push: # Creates 220MB image
       tag: wcr-maximal-samepipe
       cmd: /pipeline/source/myapp
