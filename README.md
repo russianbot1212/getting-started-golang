@@ -2,7 +2,7 @@
 
 [![wercker status](https://app.wercker.com/status/eeb2240b621c0181c460d73a18971de2/s "wercker status")](https://app.wercker.com/project/bykey/eeb2240b621c0181c460d73a18971de2)
 
-A sample application in Go for Wercker.
+A sample application in Go for Wercker. 
 
 This application uses the `golang` container obtained from the [Docker Hub](https://hub.docker.com/_/golang/)
 
