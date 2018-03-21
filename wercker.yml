@@ -69,7 +69,7 @@ push-maximal-image-to-wcrio:
     box: alpine # this seems to also be the used as the base image when we do docker-push, so is actually pretty minimal
     steps:
     - script:
-        name: Check what we've got # looks like pipeline/output ($WERCKER_OUTPUT_DIR) is not copied to next pipeline, but /pipeline/source ($WERCKER_ROOT) is not
+        name: Check what we've got # looks like pipeline/output ($WERCKER_OUTPUT_DIR) is not copied to next pipeline, but /pipeline/source ($WERCKER_ROOT) is  not
         code: |
           echo Contents of /pipeline
           ls -l /pipeline   
